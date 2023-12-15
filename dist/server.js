@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-const morgan =  require("morgan");
+const morgan = require("morgan");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 // MongoDB Connection
 mongoose.connect(process.env.MONGO, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
 });
 
 // MongoDB Schema
@@ -26,16 +26,16 @@ const commentSchema = new mongoose.Schema({
     discordChannelId: String,
     status: {
         type: String,
-        default: "new",
+        default: "new"
     },
     statusEvent: {
         type: String,
-        default: "created",
+        default: "created"
     },
     time: {
         type: Date,
-        default: Date.now,
-    },
+        default: Date.now
+    }
 });
 
 const Comment = mongoose.model("Comment", commentSchema);
@@ -63,11 +63,7 @@ app.get("/api/comments", async (req, res) => {
 app.put("/api/comment/status/:status", async (req, res) => {
     const { status } = req.params;
     try {
-        const updatedComment = await Comment.findOneAndUpdate(
-            { _id: req.body._id },
-            { status, statusEvent: "admin-handled" },
-            { new: true }
-        );
+        const updatedComment = await Comment.findOneAndUpdate({ _id: req.body._id }, { status, statusEvent: "admin-handled" }, { new: true });
 
         if (!updatedComment) {
             return res.status(404).json({ error: "Comment not found" });
