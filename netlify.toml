@@ -1,9 +1,13 @@
 [build]
   command = "npm run build"
   publish = "build"
-[[functions]]
-  name = "server"
-  script = "build/server.js"
+  functions = "build"
+[functions]
+external_node_modules = [
+    name = "server"
+    script = "build/server.js"
+  ]
+  
 
 [[redirects]]
   from = "/api/*"
