@@ -2,16 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-const morgan =  require("morgan");
 
 const app = express();
-const port = process.env.PORT || 3000;
-
 
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(morgan('dev'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO, {
@@ -80,6 +76,12 @@ app.put("/api/comment/status/:status", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// Exporting as a serverless function
+module.exports.handler = async (event, context) => {
+    return app(event, context);
+};
+
 
 // Start the server
 app.listen(port, () => {
