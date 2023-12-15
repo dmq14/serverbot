@@ -7,10 +7,11 @@ const morgan =  require("morgan");
 const app = express();
 const port = process.env.PORT || 3000;
 
+
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO, {
