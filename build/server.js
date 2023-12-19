@@ -50,7 +50,9 @@ app.post("/api/comment", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
+app.get('/keep-alive', (req, res) => {
+    res.send('Bot is alive!');
+});
 app.get("/api/comments", async (req, res) => {
     try {
         const comments = await Comment.find();
